@@ -17,13 +17,13 @@ variables:
 
 steps:
 
-- pwsh: |
+- script: |
 
     Get-PSDrive.bat
 
   displayName: "run .bat"
 
-- pwsh: |
+- script: |
 
     ls
     mkdir ..¥backup¥scripts
@@ -32,7 +32,7 @@ steps:
   
   displayName: 'backup'
 
-- pwsh: |
+- script: |
 
     Set-ExecutionPolicy RemoteSigned
     Get-PSDrive.bat.ps1

@@ -25,10 +25,10 @@ steps:
 
 - powershell: |
     New-Item scripts
-    Get-ChildItem
+    Copy-Item bat_out.txt scripts
+    Get-ChildItem scripts
 
-    Copy-Item bat_out.txt scripts¥
-    Copy-Item scripts $(Build.ArtifactStagingDirectory)¥
+    Copy-Item scripts $(Build.ArtifactStagingDirectory) -Recurse
 
   displayName: "backup"
 

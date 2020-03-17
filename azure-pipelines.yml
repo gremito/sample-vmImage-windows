@@ -21,18 +21,21 @@ steps:
     Start-Process Get-PSDrive.bat
     Get-ChildItem
 
+  displayName: "run .bat"
+
+- powershell: |
     New-Item scripts
     Get-ChildItem
 
     Copy-Item bat_out.txt scripts
     Copy-Item scripts $(Build.ArtifactStagingDirectory) -Recurse  
 
-  displayName: "run .bat and backup"
+  displayName: "backup"
 
 - powershell: |
-    Set-ExecutionPolicy RemoteSigned
+    # Set-ExecutionPolicy RemoteSigned
     Get-PSDrive.bat.ps1
-    Set-ExecutionPolicy Restricted
+    # Set-ExecutionPolicy Restricted
 
   displayName: "run .ps1"
 

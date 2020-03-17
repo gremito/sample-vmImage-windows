@@ -23,12 +23,13 @@ steps:
   displayName: "run .bat"
 
 - powershell: |
-    New-Item scripts
-    Copy-Item -LiteralPath .\bat_out.txt -Destination .\scripts
+    # BAD
+    # New-Item scripts
+    # Copy-Item -LiteralPath .\bat_out.txt -Destination .\scripts
+    # Copy-Item -Literal .\scripts -Destination $(Build.ArtifactStagingDirectory) -Recurse
 
-    Copy-Item -Literal .\scripts -Destination $(Build.ArtifactStagingDirectory) -Recurse
-
-    Get-ChildItem
+    New-Item $(Build.ArtifactStagingDirectory)\scripts
+    Copy-Item -LiteralPath .\bat_out.txt -Destination $(Build.ArtifactStagingDirectory)\scripts
 
   displayName: "backup"
 

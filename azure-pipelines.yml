@@ -17,12 +17,12 @@ variables:
 
 steps:
 
-- powershell: |
+- script: |
     Start-Process Get-PSDrive.bat
 
   displayName: "run .bat"
 
-- powershell: |
+- script: |
     # BAD
     # New-Item scripts
     # Copy-Item -LiteralPath .\bat_out.txt -Destination .\scripts

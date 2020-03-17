@@ -1,0 +1,35 @@
+# Universal Windows Platform
+# Build a Universal Windows Platform project using Visual Studio.
+# Add steps that test and distribute an app, save build artifacts, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'x86|x64|ARM'
+  buildConfiguration: 'Release'
+  appxPackageDir: '$(build.artifactStagingDirectory)\AppxPackages\\'
+
+steps:
+
+- script: |
+
+    Get-PSDrive.bat
+
+  displayName: "run .bat"
+
+
+- script: |
+
+    Set-ExecutionPolicy RemoteSigned
+
+    Get-PSDrive.bat.ps1
+
+    Set-ExecutionPolicy Restricted
+  
+  displayName: "run .ps1"

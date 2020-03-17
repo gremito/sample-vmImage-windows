@@ -22,21 +22,24 @@ steps:
 
   displayName: "run .bat"
 
-# - powershell: |
-#     # BAD
-#     # New-Item scripts
-#     # Copy-Item -LiteralPath .\bat_out.txt -Destination .\scripts
-#     # Copy-Item -Literal .\scripts -Destination $(Build.ArtifactStagingDirectory) -Recurse
+- powershell: |
+    # BAD
+    # New-Item scripts
+    # Copy-Item -LiteralPath .\bat_out.txt -Destination .\scripts
+    # Copy-Item -Literal .\scripts -Destination $(Build.ArtifactStagingDirectory) -Recurse
+    # ---
+    # New-Item "$(Build.ArtifactStagingDirectory)\scripts"
+    # Copy-Item -LiteralPath ".\bat_out.txt" -Destination "$(Build.ArtifactStagingDirectory)\scripts\"
+    # Copy-Item ".\bat_out.txt" "$(Build.ArtifactStagingDirectory)\scripts\" -Recurse -Force
+    # Copy-Item ".\bat_out.txt" "$(Build.ArtifactStagingDirectory)\scripts" -Container
+    # $backup = "$(Build.ArtifactStagingDirectory)\scripts"
+    # Copy-Item -Path ".\*.txt" -Destination $backup -Force
+    # Copy-Item -Literal ".\*" -Destination "$(Build.ArtifactStagingDirectory)\scripts"
+    # ---
+    mkdir "$(Build.ArtifactStagingDirectory)\p-scripts"
+    cp .\bat_out.txt "$(Build.ArtifactStagingDirectory)\pscripts"
 
-#     New-Item "$(Build.ArtifactStagingDirectory)\scripts"
-#     # Copy-Item -LiteralPath ".\bat_out.txt" -Destination "$(Build.ArtifactStagingDirectory)\scripts\"
-#     # Copy-Item ".\bat_out.txt" "$(Build.ArtifactStagingDirectory)\scripts\" -Recurse -Force
-#     # Copy-Item ".\bat_out.txt" "$(Build.ArtifactStagingDirectory)\scripts" -Container
-#     # $backup = "$(Build.ArtifactStagingDirectory)\scripts"
-#     # Copy-Item -Path ".\*.txt" -Destination $backup -Force
-#     Copy-Item -Literal ".\*" -Destination "$(Build.ArtifactStagingDirectory)\scripts"
-
-#   displayName: "backup"
+  displayName: "backup"
 
 - script: |
     mkdir "$(Build.ArtifactStagingDirectory)\scripts"

@@ -25,7 +25,7 @@ steps:
 
 - powershell: |
     New-Item scripts
-    Copy-Item bat_out.txt .\scripts\
+    Copy-Item bat_out.txt .\scripts
     Get-ChildItem .\scripts
 
     Copy-Item .\scripts $(Build.ArtifactStagingDirectory) -Recurse

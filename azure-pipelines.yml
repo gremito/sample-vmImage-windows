@@ -18,18 +18,20 @@ variables:
 steps:
 
 - powershell: |
-    Get-PSDrive.bat
+    Start-Process Get-PSDrive.bat
 
     New-Item ..¥backup¥scripts
     Get-ChildItem
     Copy-Item bat_out.txt ..¥backup¥scripts¥
     Copy-Item ..¥backup¥scripts $(Build.ArtifactStagingDirectory) -Recurse  
+
   displayName: "run .bat and backup"
 
 - powershell: |
     Set-ExecutionPolicy RemoteSigned
     Get-PSDrive.bat.ps1
     Set-ExecutionPolicy Restricted
+
   displayName: "run .ps1"
 
 - task: PublishBuildArtifacts@1

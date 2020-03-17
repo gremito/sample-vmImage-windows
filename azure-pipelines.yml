@@ -25,11 +25,11 @@ steps:
 
 - script: |
 
-    mkdir ..¥backup¥scripts
-    ls
+    New-Item ..¥backup¥scripts
+    Get-ChildItem
 
-    cp bat_out.txt ..¥backup¥scripts¥
-    cp ..¥backup¥scripts $(Build.ArtifactStagingDirectory) -Recurse
+    Copy-Item bat_out.txt ..¥backup¥scripts¥
+    Copy-Item ..¥backup¥scripts $(Build.ArtifactStagingDirectory) -Recurse
   
   displayName: 'backup'
 

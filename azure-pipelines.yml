@@ -23,13 +23,24 @@ steps:
 
   displayName: "run .bat"
 
+- script: |
+
+    mkdir ..¥backup¥scripts
+    cp bat_out.txt ..¥backup¥scripts¥
+    cp ..¥backup¥scripts $(Build.ArtifactStagingDirectory) -Recurse
+  
+  displayName: ''
 
 - script: |
 
     Set-ExecutionPolicy RemoteSigned
-
     Get-PSDrive.bat.ps1
-
     Set-ExecutionPolicy Restricted
   
   displayName: "run .ps1"
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: $(Build.ArtifactStagingDirectory)
+    artifactName: 'backup'
+    publishLocation: 'Container'

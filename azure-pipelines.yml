@@ -32,12 +32,12 @@ steps:
 
   displayName: "backup"
 
-- powershell: |
-    # Set-ExecutionPolicy RemoteSigned
-    Get-PSDrive.bat.ps1
-    # Set-ExecutionPolicy Restricted
+# - powershell: |
+#     Set-ExecutionPolicy RemoteSigned
+#     Get-PSDrive.bat.ps1
+#     Set-ExecutionPolicy Restricted
 
-  displayName: "run .ps1"
+#   displayName: "run .ps1"
 
 - task: PublishBuildArtifacts@1
   inputs:

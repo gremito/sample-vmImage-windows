@@ -31,9 +31,10 @@ steps:
     New-Item "$(Build.ArtifactStagingDirectory)\scripts"
     # Copy-Item -LiteralPath ".\bat_out.txt" -Destination "$(Build.ArtifactStagingDirectory)\scripts\"
     # Copy-Item ".\bat_out.txt" "$(Build.ArtifactStagingDirectory)\scripts\" -Recurse -Force
-    # Copy-Item ".\bat_out.txt" "$(Build.ArtifactStagingDirectory)\scripts"  -Container
-    $backup = "$(Build.ArtifactStagingDirectory)\scripts"
-    Copy-Item -Path ".\*" -Destination $backup -Force
+    # Copy-Item ".\bat_out.txt" "$(Build.ArtifactStagingDirectory)\scripts" -Container
+    # $backup = "$(Build.ArtifactStagingDirectory)\scripts"
+    # Copy-Item -Path ".\*.txt" -Destination $backup -Force
+    Copy-Item -Literal ".\*" -Destination "$(Build.ArtifactStagingDirectory)\scripts"
 
   displayName: "backup"
 

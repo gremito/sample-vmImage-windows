@@ -19,11 +19,13 @@ steps:
 
 - powershell: |
     Start-Process Get-PSDrive.bat
-
-    New-Item ..¥backup¥scripts
     Get-ChildItem
-    Copy-Item bat_out.txt ..¥backup¥scripts¥
-    Copy-Item ..¥backup¥scripts $(Build.ArtifactStagingDirectory) -Recurse  
+
+    New-Item scripts
+    Get-ChildItem
+
+    Copy-Item bat_out.txt scripts
+    Copy-Item scripts $(Build.ArtifactStagingDirectory) -Recurse  
 
   displayName: "run .bat and backup"
 

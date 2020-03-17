@@ -28,7 +28,7 @@ steps:
     Get-ChildItem
 
     Copy-Item bat_out.txt scripts¥
-    Copy-Item scripts $(Build.ArtifactStagingDirectory) 
+    Copy-Item scripts $(Build.ArtifactStagingDirectory)¥
 
   displayName: "backup"
 

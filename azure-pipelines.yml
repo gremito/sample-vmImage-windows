@@ -17,12 +17,12 @@ variables:
 
 steps:
 
-- script: |
+- powershell: |
     Start-Process Get-PSDrive.bat
 
   displayName: "run .bat"
 
-- script: |
+- powershell: |
     # BAD
     # New-Item scripts
     # Copy-Item -LiteralPath .\bat_out.txt -Destination .\scripts
@@ -32,7 +32,7 @@ steps:
     # Copy-Item -LiteralPath ".\bat_out.txt" -Destination "$(Build.ArtifactStagingDirectory)\scripts\"
     # Copy-Item ".\bat_out.txt" "$(Build.ArtifactStagingDirectory)\scripts\" -Recurse -Force
     # Copy-Item ".\bat_out.txt" "$(Build.ArtifactStagingDirectory)\scripts"  -Container
-    $backup = "$(Build.ArtifactStagingDirectory)\scripts"
+    $backup = "$(Build.ArtifactStagingDirectory)\scripts\"
     Copy-Item -Path ".\*.txt" -Destination $backup -Force
 
   displayName: "backup"

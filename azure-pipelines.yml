@@ -17,19 +17,16 @@ variables:
 
 steps:
 
-- script: |
+- powershell: |
     Get-PSDrive.bat
-  displayName: "run .bat"
 
-- script: |
-    pwd
-    mkdir ..¥backup¥scripts
-    ls
-    cp bat_out.txt ..¥backup¥scripts¥
-    cp ..¥backup¥scripts $(Build.ArtifactStagingDirectory) -Recurse  
-  displayName: 'backup'
+    New-Item ..¥backup¥scripts
+    Get-ChildItem
+    Copy-Item bat_out.txt ..¥backup¥scripts¥
+    Copy-Item ..¥backup¥scripts $(Build.ArtifactStagingDirectory) -Recurse  
+  displayName: "run .bat and backup"
 
-- script: |
+- powershell: |
     Set-ExecutionPolicy RemoteSigned
     Get-PSDrive.bat.ps1
     Set-ExecutionPolicy Restricted

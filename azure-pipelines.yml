@@ -40,7 +40,7 @@ steps:
 
 - script: |
     mkdir "$(Build.ArtifactStagingDirectory)\scripts"
-    cp .\bat_out.txt "$(Build.ArtifactStagingDirectory)\scripts\" 
+    cp .\bat_out.txt "$(Build.ArtifactStagingDirectory)\scripts"
 
   displayName: "backup"
 

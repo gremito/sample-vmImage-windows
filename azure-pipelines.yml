@@ -60,7 +60,8 @@ steps:
 
 #   displayName: "run .ps1"
 
-- script: |
+# - script: |
+- powershell: |
     echo $(APP_NAME)
     echo "Hello $(APP_NAME)!!"
 

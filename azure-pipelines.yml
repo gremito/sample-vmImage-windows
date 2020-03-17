@@ -37,7 +37,7 @@ steps:
     # Copy-Item -Literal ".\*" -Destination "$(Build.ArtifactStagingDirectory)\scripts"
     # ---
     mkdir "$(Build.ArtifactStagingDirectory)\p-scripts"
-    cp .\bat_out.txt "$(Build.ArtifactStagingDirectory)\pscripts"
+    cp .\bat_out.txt "$(Build.ArtifactStagingDirectory)\p-scripts"
 
   displayName: "backup"
 

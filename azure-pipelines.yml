@@ -24,9 +24,11 @@ steps:
 
 - powershell: |
     New-Item scripts
-    Copy-Item -Path .\bat_out.txt -Destination .\scripts
+    Copy-Item -Path .\bat_out.txt -Destination .\scripts\bat_out.txt
 
     Copy-Item -Path .\scripts -Recurse -Destination $(Build.ArtifactStagingDirectory)
+
+    Get-ChildItem
 
   displayName: "backup"
 

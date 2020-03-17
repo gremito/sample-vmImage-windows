@@ -61,6 +61,7 @@ steps:
 #   displayName: "run .ps1"
 
 - script: |
+    echo $(APP_NAME)
     echo "Hello $(APP_NAME)!!"
 
   displayName: "test val"

@@ -54,6 +54,12 @@ jobs:
       #   appxPackageDir: '$(build.artifactStagingDirectory)\AppxPackages\\'
 
       steps:
+
+          - script: |
+              dir "$(Pipeline.Workspace)"
+
+            displayName: "check before download"
+
           - task: DownloadPipelineArtifact@2
             inputs:
               source: 'specific'

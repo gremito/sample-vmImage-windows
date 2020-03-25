@@ -47,20 +47,31 @@ jobs:
 
       steps:
 
+          # - script: |
+          #     dir ..\
+
+          #     mkdir "$(System.ArtifactsDirectory)\download"
+          #     mkdir "$(Pipeline.Workspace)\download"
+          #   displayName: 'Init'  
+
+          # - task: DownloadPipelineArtifact@2
+          #   inputs:
+          #     source: 'specific'
+          #     project: 'gremito.net'
+          #     pipeline: 5
+          #     runVersion: 'latest'
+          #     path: "$(Pipeline.Workspace)/download"
+
           - script: |
-              dir ..\
+              echo "dir System.DefaultWorkingDirectory"
+              dir "$(System.DefaultWorkingDirectory)"
+              echo "dir Build.ArtifactStagingDirectory"
+              dir "$(Build.ArtifactStagingDirectory)"
+              ehoc "dir Pipeline.Workspace"
+              dir "$(Pipeline.Workspace)"
 
-              mkdir "$(System.ArtifactsDirectory)\download"
-              mkdir "$(Pipeline.Workspace)\download"
-            displayName: 'Init'  
+            displayName: "check download"
 
-          - task: DownloadPipelineArtifact@2
-            inputs:
-              source: 'specific'
-              project: 'gremito.net'
-              pipeline: 5
-              runVersion: 'latest'
-              path: "$(Pipeline.Workspace)/download"
 
           - script: |
               Get-PSDrive.bat

@@ -96,8 +96,8 @@ jobs:
               dir "$(Pipeline.Workspace)"
               echo "dir Pipeline.Workspace\s\"
               dir "$(Pipeline.Workspace)\s\"
-              echo "dir Pipeline.Workspace\s\download"
-              dir "$(Pipeline.Workspace)\s\download"
+              echo "dir Pipeline.Workspace\download"
+              dir "$(Pipeline.Workspace)\download"
 
             displayName: "check after download"
 

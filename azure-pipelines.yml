@@ -4,71 +4,135 @@
 # https://aka.ms/yaml
 
 trigger:
-- master
+    branches:
+        include:
+            - '*'
+    tags:
+        include:
+            - '*'
 
-pool:
-  vmImage: 'windows-latest'
+jobs:
+    - job: Linux
+      pool:
+          vmImage: 'ubuntu-16.04'
+      steps:
+          - script: |
+              mkdir $(System.DefaultWorkingDirectory)/bin
+              echo 'Hello World!!\n\nver 1.0.0' >> $(System.DefaultWorkingDirectory)/bin/share.txt
+              cat $(System.DefaultWorkingDirectory)/bin/share.txt
 
-variables:
-  solution: '**/*.sln'
-  buildPlatform: 'x86|x64|ARM'
-  buildConfiguration: 'Release'
-  appxPackageDir: '$(build.artifactStagingDirectory)\AppxPackages\\'
+              # cp -r $(System.DefaultWorkingDirectory)/bin $(Build.ArtifactStagingDirectory)
 
-steps:
+            displayName: 'Create share.txt'
 
-- powershell: |
-    Start-Process Get-PSDrive.bat
+          # - task: PublishBuildArtifacts@1
+          #   inputs:
+          #     pathToPublish: $(Build.ArtifactStagingDirectory)
+          #     artifactName: 'BuildArtifact'
+          #     publishLocation: 'Container'
 
-  displayName: "run .bat"
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: $(Pipeline.Workspace)
+              artifactName: 'PipelineArtifact'
 
-- powershell: |
-    # BAD
-    # New-Item scripts
-    # Copy-Item -LiteralPath .\bat_out.txt -Destination .\scripts
-    # Copy-Item -Literal .\scripts -Destination $(Build.ArtifactStagingDirectory) -Recurse
-    # ---
-    # New-Item "$(Build.ArtifactStagingDirectory)\scripts"
-    # Copy-Item -LiteralPath ".\bat_out.txt" -Destination "$(Build.ArtifactStagingDirectory)\scripts\"
-    # Copy-Item ".\bat_out.txt" "$(Build.ArtifactStagingDirectory)\scripts\" -Recurse -Force
-    # Copy-Item ".\bat_out.txt" "$(Build.ArtifactStagingDirectory)\scripts" -Container
-    # $backup = "$(Build.ArtifactStagingDirectory)\scripts"
-    # Copy-Item -Path ".\*.txt" -Destination $backup -Force
-    # Copy-Item -Literal ".\*" -Destination "$(Build.ArtifactStagingDirectory)\scripts"
-    # ---
+    - job: Windows
+      pool:
+        vmImage: 'windows-latest'
 
-    # Good
-    mkdir "$(Build.ArtifactStagingDirectory)\p-scripts"
-    cp .\bat_out.txt "$(Build.ArtifactStagingDirectory)\p-scripts"
+      # variables:
+      #   solution: '**/*.sln'
+      #   buildPlatform: 'x86|x64|ARM'
+      #   buildConfiguration: 'Release'
+      #   appxPackageDir: '$(build.artifactStagingDirectory)\AppxPackages\\'
 
-  displayName: "backup"
+      steps:
 
-- script: |
-    # BAD
-    # Copy-Item -LiteralPath ".\bat_out.txt" -Destination "$(Build.ArtifactStagingDirectory)\scripts\"
+          - script: |
+              dir ..\
 
-    # Good
-    mkdir "$(Build.ArtifactStagingDirectory)\scripts"
-    cp .\bat_out.txt "$(Build.ArtifactStagingDirectory)\scripts"
+              # mkdir "$(System.ArtifactsDirectory)\download"
+              mkdir "$(Pipeline.Workspace)\download"
+            displayName: 'Init'  
 
-  displayName: "backup"
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              source: 'specific'
+              project: 'gremito.net'
+              pipeline: 5
+              runVersion: 'latest'
+              path: "$(Pipeline.Workspace)/download"
 
-# - powershell: |
-#     Set-ExecutionPolicy RemoteSigned
-#     Get-PSDrive.bat.ps1
-#     Set-ExecutionPolicy Restricted
+          - script: |
+              echo "dir Pipeline.Workspace\download"
+              dir "$(Pipeline.Workspace)\download"
 
-#   displayName: "run .ps1"
+              echo "dir Pipeline.Workspace\download\PipelineArtifact"
+              dir "$(Pipeline.Workspace)\download\PipelineArtifact"
 
-# - script: |
-- powershell: |
-    echo $(APP_NAME)
-    echo "Hello $(APP_NAME)!!"
+              echo "type Pipeline.Workspace\download\PipelineArtifact\s\bin\share.txt"
+              type "$(Pipeline.Workspace)\download\PipelineArtifact\s\bin\share.txt"
 
-  displayName: "test val"
+            displayName: "check after download"
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    pathToPublish: $(Build.ArtifactStagingDirectory)
-    artifactName: 'backup'
-    publishLocation: 'Container'
+
+          - script: |
+              Get-PSDrive.bat
+
+            displayName: "run .bat"
+
+          # - powershell: |
+          #     Start-Process Get-PSDrive.bat
+
+          #   displayName: "run .bat"
+
+          # - powershell: |
+          #     # BAD
+          #     # New-Item scripts
+          #     # Copy-Item -LiteralPath .\bat_out.txt -Destination .\scripts
+          #     # Copy-Item -Literal .\scripts -Destination $(Build.ArtifactStagingDirectory) -Recurse
+          #     # ---
+          #     # New-Item "$(Build.ArtifactStagingDirectory)\scripts"
+          #     # Copy-Item -LiteralPath ".\bat_out.txt" -Destination "$(Build.ArtifactStagingDirectory)\scripts\"
+          #     # Copy-Item ".\bat_out.txt" "$(Build.ArtifactStagingDirectory)\scripts\" -Recurse -Force
+          #     # Copy-Item ".\bat_out.txt" "$(Build.ArtifactStagingDirectory)\scripts" -Container
+          #     # $backup = "$(Build.ArtifactStagingDirectory)\scripts"
+          #     # Copy-Item -Path ".\*.txt" -Destination $backup -Force
+          #     # Copy-Item -Literal ".\*" -Destination "$(Build.ArtifactStagingDirectory)\scripts"
+          #     # ---
+
+          #     # Good
+          #     mkdir "$(Build.ArtifactStagingDirectory)\p-scripts"
+          #     cp .\bat_out.txt "$(Build.ArtifactStagingDirectory)\p-scripts"
+
+          #   displayName: "backup"
+
+          # - script: |
+          #     # BAD
+          #     # Copy-Item -LiteralPath ".\bat_out.txt" -Destination "$(Build.ArtifactStagingDirectory)\scripts\"
+
+          #     # Good
+          #     mkdir "$(Build.ArtifactStagingDirectory)\scripts"
+          #     cp .\bat_out.txt "$(Build.ArtifactStagingDirectory)\scripts"
+
+          #   displayName: "backup"
+
+          # # - powershell: |
+          # #     Set-ExecutionPolicy RemoteSigned
+          # #     Get-PSDrive.bat.ps1
+          # #     Set-ExecutionPolicy Restricted
+
+          # #   displayName: "run .ps1"
+
+          # # - script: |
+          # - powershell: |
+          #     echo $(APP_NAME)
+          #     echo "Hello $(APP_NAME)!!"
+
+          #   displayName: "test val"
+
+          # - task: PublishBuildArtifacts@1
+          #   inputs:
+          #     pathToPublish: $(Build.ArtifactStagingDirectory)
+          #     artifactName: 'backup'
+          #     publishLocation: 'Container'

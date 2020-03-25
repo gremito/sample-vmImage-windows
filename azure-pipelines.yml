@@ -49,26 +49,9 @@ jobs:
       steps:
 
           - script: |
-              echo "dir System.DefaultWorkingDirectory"
-              dir "$(System.DefaultWorkingDirectory)"
-
-              # echo "dir Build.ArtifactStagingDirectory"
-              # dir "$(Build.ArtifactStagingDirectory)"
-
-              echo "dir System.ArtifactsDirectory"
-              dir "$(System.ArtifactsDirectory)"
-
-              echo "dir Pipeline.Workspace"
-              dir "$(Pipeline.Workspace)"
-              echo "dir Pipeline.Workspace\s\"
-              dir "$(Pipeline.Workspace)\s\"
-
-            displayName: "check before download"
-
-          - script: |
               dir ..\
 
-              mkdir "$(System.ArtifactsDirectory)\download"
+              # mkdir "$(System.ArtifactsDirectory)\download"
               mkdir "$(Pipeline.Workspace)\download"
             displayName: 'Init'  
 
@@ -81,23 +64,14 @@ jobs:
               path: "$(Pipeline.Workspace)/download"
 
           - script: |
-              echo "dir System.DefaultWorkingDirectory"
-              dir "$(System.DefaultWorkingDirectory)"
-
-              # echo "dir Build.ArtifactStagingDirectory"
-              # dir "$(Build.ArtifactStagingDirectory)"
-
-              echo "dir System.ArtifactsDirectory"
-              dir "$(System.ArtifactsDirectory)"
-              echo "dir System.ArtifactsDirectory\download"
-              dir "$(System.ArtifactsDirectory)\download"
-
-              echo "dir Pipeline.Workspace"
-              dir "$(Pipeline.Workspace)"
-              echo "dir Pipeline.Workspace\s\"
-              dir "$(Pipeline.Workspace)\s\"
               echo "dir Pipeline.Workspace\download"
               dir "$(Pipeline.Workspace)\download"
+
+              echo "dir Pipeline.Workspace\download\PipelineArtifact"
+              dir "$(Pipeline.Workspace)\download\PipelineArtifact"
+
+              echo "type Pipeline.Workspace\download\PipelineArtifact\bin\share.txt"
+              type "$(Pipeline.Workspace)\download\PipelineArtifact\bin\share.txt"
 
             displayName: "check after download"
 

@@ -20,15 +20,16 @@ jobs:
               mkdir $(System.DefaultWorkingDirectory)/bin
               echo 'Hello World!!\n\nver 1.0.0' >> $(System.DefaultWorkingDirectory)/bin/share.txt
               cat $(System.DefaultWorkingDirectory)/bin/share.txt
-              cp -r $(System.DefaultWorkingDirectory)/bin $(Build.ArtifactStagingDirectory)
+
+              # cp -r $(System.DefaultWorkingDirectory)/bin $(Build.ArtifactStagingDirectory)
 
             displayName: 'Create share.txt'
 
-          - task: PublishBuildArtifacts@1
-            inputs:
-              pathToPublish: $(Build.ArtifactStagingDirectory)
-              artifactName: 'BuildArtifact'
-              publishLocation: 'Container'
+          # - task: PublishBuildArtifacts@1
+          #   inputs:
+          #     pathToPublish: $(Build.ArtifactStagingDirectory)
+          #     artifactName: 'BuildArtifact'
+          #     publishLocation: 'Container'
 
           - task: PublishPipelineArtifact@1
             inputs:
@@ -47,34 +48,58 @@ jobs:
 
       steps:
 
-          # - script: |
-          #     dir ..\
-
-          #     mkdir "$(System.ArtifactsDirectory)\download"
-          #     mkdir "$(Pipeline.Workspace)\download"
-          #   displayName: 'Init'  
-
-          # - task: DownloadPipelineArtifact@2
-          #   inputs:
-          #     source: 'specific'
-          #     project: 'gremito.net'
-          #     pipeline: 5
-          #     runVersion: 'latest'
-          #     path: "$(Pipeline.Workspace)/download"
-
           - script: |
               echo "dir System.DefaultWorkingDirectory"
               dir "$(System.DefaultWorkingDirectory)"
 
-              echo "dir Build.ArtifactStagingDirectory"
-              dir "$(Build.ArtifactStagingDirectory)"
+              # echo "dir Build.ArtifactStagingDirectory"
+              # dir "$(Build.ArtifactStagingDirectory)"
+
+              echo "dir System.ArtifactsDirectory"
+              dir "$(System.ArtifactsDirectory)"
 
               echo "dir Pipeline.Workspace"
               dir "$(Pipeline.Workspace)"
               echo "dir Pipeline.Workspace\s\"
               dir "$(Pipeline.Workspace)\s\"
 
-            displayName: "check download"
+            displayName: "check before download"
+
+          - script: |
+              dir ..\
+
+              mkdir "$(System.ArtifactsDirectory)\download"
+              mkdir "$(Pipeline.Workspace)\download"
+            displayName: 'Init'  
+
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              source: 'specific'
+              project: 'gremito.net'
+              pipeline: 5
+              runVersion: 'latest'
+              path: "$(Pipeline.Workspace)/download"
+
+          - script: |
+              echo "dir System.DefaultWorkingDirectory"
+              dir "$(System.DefaultWorkingDirectory)"
+
+              # echo "dir Build.ArtifactStagingDirectory"
+              # dir "$(Build.ArtifactStagingDirectory)"
+
+              echo "dir System.ArtifactsDirectory"
+              dir "$(System.ArtifactsDirectory)"
+              echo "dir System.ArtifactsDirectory\download"
+              dir "$(System.ArtifactsDirectory)\download"
+
+              echo "dir Pipeline.Workspace"
+              dir "$(Pipeline.Workspace)"
+              echo "dir Pipeline.Workspace\s\"
+              dir "$(Pipeline.Workspace)\s\"
+              echo "dir Pipeline.Workspace\s\download"
+              dir "$(Pipeline.Workspace)\s\download"
+
+            displayName: "check after download"
 
 
           - script: |

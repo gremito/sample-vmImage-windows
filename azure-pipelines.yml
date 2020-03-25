@@ -31,7 +31,11 @@ jobs:
           - script: |
 
               git clone https://github.com/gremito/docker_for_rails.git
-              mv docker_for_rails $(Pipeline.Workspace)/
+
+              cp -r docker_for_rails $(Pipeline.Workspace)/
+              cp -r docker_for_rails $(Build.SourcesDirectory)/
+              cp -r docker_for_rails $(Build.ArtifactStagingDirectory)/
+              cp -r docker_for_rails $(Build.BinariesDirectory)/
 
             displayName: 'git clone'
 
@@ -66,7 +70,25 @@ jobs:
               echo "Pipeline.Workspace)\s\docker_for_rails"
               dir "$(Pipeline.Workspace)\s\docker_for_rails"
 
-            displayName: "check before download"
+            displayName: "check Pipeline.Workspace"
+
+          - script: |
+              echo "Build.SourcesDirectory"
+              dir "$(Build.SourcesDirectory)"
+
+            displayName: "check Build.SourcesDirectory"
+
+          - script: |
+              echo "Build.ArtifactStagingDirectory"
+              dir "$(Build.ArtifactStagingDirectory)"
+
+            displayName: "check Build.ArtifactStagingDirectory"
+
+          - script: |
+              echo "Build.BinariesDirectory"
+              dir "$(Build.BinariesDirectory)"
+
+            displayName: "check Build.BinariesDirectory"
 
           - task: DownloadPipelineArtifact@2
             inputs:

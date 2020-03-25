@@ -76,8 +76,8 @@ jobs:
               echo "dir Pipeline.Workspace\download\PipelineArtifact"
               dir "$(Pipeline.Workspace)\download\PipelineArtifact"
 
-              echo "type Pipeline.Workspace\download\PipelineArtifact\s\bin\azure-pipelines.yml"
-              type "$(Pipeline.Workspace)\download\PipelineArtifact\s\bin\azure-pipelines.yml"
+              echo "type Pipeline.Workspace\download\PipelineArtifact\s\docker_for_rails\azure-pipelines.yml"
+              type "$(Pipeline.Workspace)\download\PipelineArtifact\s\docker_for_rails\azure-pipelines.yml"
 
             displayName: "check after download"
 

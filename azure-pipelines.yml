@@ -70,8 +70,8 @@ jobs:
               echo "dir Pipeline.Workspace\download\PipelineArtifact"
               dir "$(Pipeline.Workspace)\download\PipelineArtifact"
 
-              echo "type Pipeline.Workspace\download\PipelineArtifact\bin\share.txt"
-              type "$(Pipeline.Workspace)\download\PipelineArtifact\bin\share.txt"
+              echo "type Pipeline.Workspace\download\PipelineArtifact\s\bin\share.txt"
+              type "$(Pipeline.Workspace)\download\PipelineArtifact\s\bin\share.txt"
 
             displayName: "check after download"
 

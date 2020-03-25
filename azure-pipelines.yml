@@ -65,10 +65,14 @@ jobs:
           - script: |
               echo "dir System.DefaultWorkingDirectory"
               dir "$(System.DefaultWorkingDirectory)"
+
               echo "dir Build.ArtifactStagingDirectory"
               dir "$(Build.ArtifactStagingDirectory)"
-              ehoc "dir Pipeline.Workspace"
+
+              echo "dir Pipeline.Workspace"
               dir "$(Pipeline.Workspace)"
+              echo "dir Pipeline.Workspace\s\"
+              dir "$(Pipeline.Workspace)\s\"
 
             displayName: "check download"
 

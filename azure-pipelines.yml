@@ -67,8 +67,8 @@ jobs:
               echo "Pipeline.Workspace)\s"
               dir "$(Pipeline.Workspace)\s"
 
-              echo "Pipeline.Workspace)\s\docker_for_rails"
-              dir "$(Pipeline.Workspace)\s\docker_for_rails"
+              # echo "Pipeline.Workspace)\s\docker_for_rails"
+              # dir "$(Pipeline.Workspace)\s\docker_for_rails"
 
             displayName: "check Pipeline.Workspace"
 

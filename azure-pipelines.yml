@@ -54,13 +54,6 @@ jobs:
       #   appxPackageDir: '$(build.artifactStagingDirectory)\AppxPackages\\'
 
       steps:
-
-          - script: |
-              dir ..\
-
-              mkdir "$(Pipeline.Workspace)\download"
-            displayName: 'Init'  
-
           - task: DownloadPipelineArtifact@2
             inputs:
               source: 'specific'
@@ -75,6 +68,9 @@ jobs:
 
               echo "dir Pipeline.Workspace\download\PipelineArtifact"
               dir "$(Pipeline.Workspace)\download\PipelineArtifact"
+
+              echo "type Pipeline.Workspace\download\PipelineArtifact\s"
+              type "$(Pipeline.Workspace)\download\PipelineArtifact\s"
 
               echo "type Pipeline.Workspace\download\PipelineArtifact\s\docker_for_rails\azure-pipelines.yml"
               type "$(Pipeline.Workspace)\download\PipelineArtifact\s\docker_for_rails\azure-pipelines.yml"

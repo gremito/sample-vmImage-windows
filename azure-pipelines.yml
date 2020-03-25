@@ -34,6 +34,10 @@ jobs:
               artifactName: 'PipelineArtifact'
 
     - job: Windows
+
+      dependsOn:
+        - Linux
+
       pool:
         vmImage: 'windows-latest'
 

@@ -60,7 +60,19 @@ jobs:
 
       steps:
 
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              source: 'specific'
+              project: 'gremito.net'
+              pipeline: 5
+              runVersion: 'latest'
+              path: "$(Pipeline.Workspace)/download"
+
           - script: |
+
+              echo "show download"
+              dir "$(Pipeline.Workspace)/download"
+
               echo "Pipeline.Workspace"
               dir "$(Pipeline.Workspace)"
 

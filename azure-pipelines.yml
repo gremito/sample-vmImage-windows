@@ -62,25 +62,20 @@ jobs:
 
           - task: DownloadPipelineArtifact@2
             inputs:
-              source: 'specific'
-              project: 'gremito.net'
-              pipeline: 5
-              runVersion: 'latest'
-              path: "$(Pipeline.Workspace)/download"
+              buildType: 'current'
+              artifactName: 'PipelineArtifact'
+              targetPath: '$(Pipeline.Workspace)/download'
 
           - script: |
 
-              echo "show download"
-              dir "$(Pipeline.Workspace)/download"
+              echo "Pipeline.Workspace\download"
+              dir "$(Pipeline.Workspace)\download"
 
-              echo "Pipeline.Workspace"
-              dir "$(Pipeline.Workspace)"
+              echo "Pipeline.Workspace\download\s"
+              dir "$(Pipeline.Workspace)\download\s"
 
-              echo "Pipeline.Workspace)\s"
-              dir "$(Pipeline.Workspace)\s"
-
-              rem echo "Pipeline.Workspace)\s\docker_for_rails"
-              rem dir "$(Pipeline.Workspace)\s\docker_for_rails"
+              rem echo "Pipeline.Workspace\download\s\docker_for_rails"
+              rem dir "$(Pipeline.Workspace)\download\s\docker_for_rails"
 
             displayName: "check Pipeline.Workspace"
 
